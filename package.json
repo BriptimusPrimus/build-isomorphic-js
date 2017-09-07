@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/BriptimusPrimus/webpack-demo#readme",
   "dependencies": {
-    "hapi": "^16.5.2"
+    "hapi": "^16.5.2",
+    "nunjucks": "^3.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
