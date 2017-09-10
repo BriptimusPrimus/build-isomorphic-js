@@ -25,7 +25,8 @@
     "call": "^4.0.2",
     "hapi": "^16.5.2",
     "inert": "^4.2.1",
-    "nunjucks": "^3.0.1"
+    "nunjucks": "^3.0.1",
+    "query-string": "^5.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

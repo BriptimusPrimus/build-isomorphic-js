@@ -1,4 +1,5 @@
 import Call from 'call';
+import query from 'query-string';
 
 export default class Application {
 
@@ -44,8 +45,10 @@ export default class Application {
         // was in the routes table then create a
         // controller instance
         if (route && Controller) {
-            console.log(match)
-            console.log(Controller);
+            const controller = new Controller({
+                query: query.parse(search),
+                params: params
+            });
         }
 
         console.log(url);
