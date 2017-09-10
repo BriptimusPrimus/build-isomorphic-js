@@ -41,6 +41,7 @@ export default class Application {
         let { route, params } = match;
         // look up Controller class in routes table
         let Controller = this.routes[route];
+
         // if a route was matched and Controller class
         // was in the routes table then create a
         // controller instance
@@ -48,6 +49,17 @@ export default class Application {
             const controller = new Controller({
                 query: query.parse(search),
                 params: params
+            });
+
+            // request and reply stubs; facades will be
+            // implemented in the next chapter
+            const request = () => {};
+            const reply = () => {};
+            // execute controller action
+            controller.index(this, request, reply, (err) => {
+                if (err) {
+                    return reply(err);
+                }
             });
         }
 
