@@ -1,4 +1,26 @@
+import Call from 'call';
+
 export default class Application {
+
+    constructor(routes, options) {
+        // save routes as lookup table for controllers
+        this.routes = routes;
+        this.options = options;
+        // create a call router instance
+        this.router = new Call.Router();
+        this.registerRoutes(routes);
+    }
+
+    registerRoutes(routes) {
+        // loop through routes and add them
+        // to the call router instance
+        for (let path in routes) {
+            this.router.add({
+                path: path,
+                method: 'get'
+            });
+        }
+    }
 
     navigate(url, push=true) {
         // if browser does not support the History API
@@ -6,6 +28,24 @@ export default class Application {
         if (!history.pushState) {
             window.location = url;
             return;
+        }
+
+        // split the path and search string
+        let urlParts = url.split('?');
+        // destructure URL parts array
+        let [path, search] = urlParts;
+        // see if URL path matches route in router
+        let match = this.router.route('get', path);
+        // destructure the route path and params
+        let { route, params } = match;
+        // look up Controller class in routes table
+        let Controller = this.routes[route];
+        // if a route was matched and Controller class
+        // was in the routes table then create a
+        // controller instance
+        if (route && Controller) {
+            console.log(match)
+            console.log(Controller);
         }
 
         console.log(url);
