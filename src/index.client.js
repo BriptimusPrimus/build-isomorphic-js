@@ -1,8 +1,12 @@
 import Application from './lib';
 import HelloController from './HelloController';
+import nunjucks from 'nunjucks';
+
+// configure nunjucks to read from the dist directory
+nunjucks.configure('/templates');
 
 const application = new Application({
-  '/hello/{name*}': HelloController
+  '/{name*}': HelloController
 }, {
   // query selector for the element in which
   // the controller response should be injected

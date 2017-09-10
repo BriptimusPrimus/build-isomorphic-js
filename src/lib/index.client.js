@@ -60,6 +60,15 @@ export default class Application {
                 if (err) {
                     return reply(err);
                 }
+
+                // render controller response
+                controller.render(this.options.target, (err, response) => {
+                    if (err) {
+                        return reply(err);
+                    }
+
+                    reply(response);
+                });
             });
         }
 
