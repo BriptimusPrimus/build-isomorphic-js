@@ -1,5 +1,6 @@
 import Call from 'call';
 import query from 'query-string';
+import cookie from './cookie.client';
 
 export default class Application {
 
@@ -48,7 +49,8 @@ export default class Application {
         if (route && Controller) {
             const controller = new Controller({
                 query: query.parse(search),
-                params: params
+                params: params,
+                cookie: cookie
             });
 
             // request and reply stubs; facades will be

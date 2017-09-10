@@ -23,6 +23,7 @@
   "homepage": "https://github.com/BriptimusPrimus/webpack-demo#readme",
   "dependencies": {
     "call": "^4.0.2",
+    "cookies-js": "^1.2.3",
     "hapi": "^16.5.2",
     "inert": "^4.2.1",
     "nunjucks": "^3.0.1",
