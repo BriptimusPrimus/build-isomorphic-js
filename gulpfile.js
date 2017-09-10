@@ -26,9 +26,9 @@ gulp.task('watch', function () {
 gulp.task('bundle', function () {
   var b = browserify({
     entries: 'src/index.js',
-    debug: true,
-    transform: ['babelify']
-  });
+    debug: true
+  })
+  .transform('babelify', { presets: ['es2015'] });
 
   return b.bundle()
     .pipe(source('build/application.js'))
