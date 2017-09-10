@@ -25,11 +25,12 @@ function getName(context) {
 export default class HelloController extends Controller {
 
   toString(callback) {
-    // read template and compile using context object
-    nunjucks.renderString('<p>hello </p>', getName(this.context), (err, html) => {
+
+    nunjucks.render('hello.html', getName(this.context), (err, html) => {
       if (err) {
         return callback(err, null);
       }
+
       callback(null, html);
     });
   }
