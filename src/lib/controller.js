@@ -23,4 +23,8 @@ export default class Controller {
     });
   }
 
+  serialize() {
+    return JSON.stringify(this.context.data || {});
+  }
+
 }
