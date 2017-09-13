@@ -27,4 +27,8 @@ export default class Controller {
     return JSON.stringify(this.context.data || {});
   }
 
+  deserialize() {
+    this.context.data = JSON.parse(window.__STATE__);
+  }
+
 }

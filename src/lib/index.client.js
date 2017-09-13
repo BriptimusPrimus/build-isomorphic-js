@@ -136,6 +136,7 @@ export default class Application {
 
     rehydrate() {
         this.controller = this.createController(this.getUrl());
+        this.controller.deserialize();
     }
 
 }
