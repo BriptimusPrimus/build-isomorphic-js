@@ -4,7 +4,7 @@ export default class HomeController extends Controller {
 
     index(application, request, reply, callback) {
         if (!this.context.cookie.get('greeting')) {
-            this.context.cookie.set('greeting', '1', { 
+            this.context.cookie.set('greeting', '1', {
                 expires: 1000 * 60 * 60 * 24 * 365 
             });
         }
