@@ -49,7 +49,7 @@ export default class Application {
             }
 
             // execute controller action
-            controller.index(this, request, reply, (err) => {
+            this.controller.index(this, request, reply, (err) => {
                 if (err) {
                     return reply(err);
                 }
@@ -59,7 +59,7 @@ export default class Application {
                     previousController.detach(targetEl);
                 }
                 // render controller response
-                controller.render(this.options.target, (err, response) => {
+                this.controller.render(this.options.target, (err, response) => {
                     if (err) {
                         return reply(err);
                     }
