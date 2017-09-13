@@ -34,22 +34,19 @@ export default class Application {
         }
 
         let previousController = this.controller;
-        this.controller = this.createController(url)
+        this.controller = this.createController(url);
 
-        // if a route was matched and Controller class
-        // was in the routes table then create a
-        // controller instance
-        if (route && Controller) {
-            const controller = new Controller({
-                query: query.parse(search),
-                params: params,
-                cookie: cookie
-            });
-
-            // request and reply stubs; facades will be
-            // implemented in the next chapter
+        // if a controller was created then proceed with navigating
+        if (this.controller) {
+            // request and reply stubs
             const request = () => {};
             const reply = replyFactory(this);
+
+            // only push history stack if push
+            // argument is true
+            if (push) {
+                history.pushState({}, null, url);
+            }
 
             // execute controller action
             controller.index(this, request, reply, (err) => {
@@ -57,6 +54,10 @@ export default class Application {
                     return reply(err);
                 }
 
+                let targetEl = document.querySelector(this.options.target);
+                if (previousController) {
+                    previousController.detach(targetEl);
+                }
                 // render controller response
                 controller.render(this.options.target, (err, response) => {
                     if (err) {
@@ -64,17 +65,12 @@ export default class Application {
                     }
 
                     reply(response);
+                    this.controller.attach(targetEl);
                 });
             });
         }
 
         console.log(url);
-
-        // only push history stack if push
-        // argument is true
-        if (push) {
-            history.pushState({}, null, url);
-        }
     }
 
     start() {
@@ -135,8 +131,11 @@ export default class Application {
     }
 
     rehydrate() {
+        let targetEl = document.querySelector(this.options.target);
+
         this.controller = this.createController(this.getUrl());
         this.controller.deserialize();
+        this.controller.attach(targetEl);
     }
 
 }
