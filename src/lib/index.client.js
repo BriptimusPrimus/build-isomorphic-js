@@ -33,16 +33,8 @@ export default class Application {
             return;
         }
 
-        // split the path and search string
-        let urlParts = url.split('?');
-        // destructure URL parts array
-        let [path, search] = urlParts;
-        // see if URL path matches route in router
-        let match = this.router.route('get', path);
-        // destructure the route path and params
-        let { route, params } = match;
-        // look up Controller class in routes table
-        let Controller = this.routes[route];
+        let previousController = this.controller;
+        this.controller = this.createController(url)
 
         // if a route was matched and Controller class
         // was in the routes table then create a
@@ -111,7 +103,39 @@ export default class Application {
                 // or the href
                 this.navigate(identifier || href);
             }
-        });        
+        });
+
+        this.rehydrate();
+    }
+
+    createController(url) {
+        // split the path and search string
+        let urlParts = url.split('?');
+        // destructure url parts array
+        let [path, search] = urlParts;
+        // see if url path matches route in router
+        let match = this.router.route('get', path);
+        // destructure the route path and path path params
+        let { route, params } = match;
+        // look up controller class in routes table
+        let Controller = this.routes[route];
+
+        return Controller ?
+            new Controller({
+                // parse search string into object
+                query: query.parse(search),
+                params: params,
+                cookie: cookie
+            }) : undefined;
+    }
+
+    getUrl() {
+        let { pathname, search} = window.location;
+        return `${pathname}${search}`;
+    }
+
+    rehydrate() {
+        this.controller = this.createController(this.getUrl());
     }
 
 }
